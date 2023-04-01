@@ -17,7 +17,7 @@
           </p>
         </div>
         <div class="card__actions">
-          <a href="/products/${product.id}" class="btn">Detail</a>
+          <nuxt-link :to="`/products/${product.id}`" class="btn">Detail</nuxt-link>
         </div>
       </article>
     </div>
@@ -32,7 +32,6 @@ export default {
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get('/api/products');
-      console.log(response);
       return {
         products: response.products
       }
