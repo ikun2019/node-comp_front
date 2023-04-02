@@ -27,6 +27,9 @@
             </form>
           </li>
         <% } %> -->
+        <li class="main-header__item">
+          <a href="/login" class="<%= path === '/login' ? 'active' : '' %>">Login</a>
+        </li>
       </ul>
     </nav>
   </header>
