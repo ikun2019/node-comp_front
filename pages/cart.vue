@@ -35,7 +35,9 @@ export default {
     async deleteCartProduct(productId) {
       console.log(productId)
       try {
-        await this.$axios.$delete('http://localhost:3000/api/cart', { data: { productId } });
+        await this.$axios.$delete('/api/cart', { data: { productId } });
+        let response = await this.$axios.$get('/api/cart');
+        this.products = response.products;
         this.$router.push('/cart');
       } catch (err) {
         console.log(err);
