@@ -36,14 +36,14 @@ export default {
         }
         let response = await this.$axios.$post('/api/login', data);
         console.log(response);
-        // if (response.success) {
-        //   this.$auth.loginWith('local', {
-        //     data: {
-        //       email: this.email,
-        //       password: this.password
-        //     }
-        //   })
-        // };
+        if (response.success) {
+          this.$auth.loginWith('local', {
+            data: {
+              email: this.email,
+              password: this.password
+            }
+          })
+        };
         this.$router.push('/');
       } catch (err) {
         console.log(err);
