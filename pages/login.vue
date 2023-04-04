@@ -11,6 +11,7 @@
       </div>
       <span class="btn" @click="onLogin">Login</span>
     </div>
+    <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
     <div class="centered">
       <a href="/reset">Forgot your password?</a>
     </div>
@@ -25,12 +26,13 @@ export default {
     return {
       email: '',
       password: '',
+      errorMessage: ''
     }
   },
   methods: {
     async onLogin() {
       try {
-        this.$auth.loginWith('local', {
+        await this.$auth.loginWith('local', {
           data: {
             email: this.email,
             password: this.password
@@ -38,7 +40,8 @@ export default {
         })
         this.$router.push('/');
       } catch (err) {
-        console.log(err);
+        this.errorMessage = "IDもしくはパスワードが間違っています。"
+        this.$auth.logout();
       }
     }
   }

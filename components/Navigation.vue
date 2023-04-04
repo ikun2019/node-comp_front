@@ -11,7 +11,7 @@
       </ul>
       <ul v-if="$auth.state.loggedIn" class="main-header__item-list">
         <li class="main-header__item">
-          <span href="/logout" @click="onLogout">Logout</span>
+          <a href="/logout" @click.prevent="onLogout">Logout</a>
         </li>
       </ul>
       <ul v-else class="main-header__item-list">
