@@ -59,11 +59,12 @@ export default {
   build: {
   },
   auth: {
-    storategies: {
+    strategies: {
       local: {
         endpoints: {
           login: {
-            propatyName: 'token'
+            propertyName: 'token',
+            url: 'http://localhost:3000/api/auth/login'
           },
           logout: true
         }

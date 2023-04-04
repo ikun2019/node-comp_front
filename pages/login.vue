@@ -30,20 +30,12 @@ export default {
   methods: {
     async onLogin() {
       try {
-        let data = {
-          email: this.email,
-          password: this.password
-        }
-        let response = await this.$axios.$post('/api/login', data);
-        console.log(response);
-        if (response.success) {
-          this.$auth.loginWith('local', {
-            data: {
-              email: this.email,
-              password: this.password
-            }
-          })
-        };
+        this.$auth.loginWith('local', {
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        })
         this.$router.push('/');
       } catch (err) {
         console.log(err);
