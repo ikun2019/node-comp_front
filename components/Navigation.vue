@@ -4,31 +4,22 @@
       <ul class="main-header__item-list">
         <li class="main-header__item"><a href="/" class="<%= path === '/' ? 'active' : '' %>">Shop</a></li>
         <li class="main-header__item"><a href="/products" class="<%= path === '/products' ? 'active' : '' %>">Products</a></li>
-        <span v-if="isAuthenticated">
-          <li class="main-header__item"><a href="/cart" class="<%= path === '/cart' ? 'active' : '' %>">Cart</a></li>
-          <li class="main-header__item"><a href="/orders" class="<%= path === '/orders' ? 'active' : '' %>">Orders</a></li>
-          <li class="main-header__item"><a href="/admin/add-product" class="<%= path === '/admin/add-product' ? 'active' : '' %>">Add Product</a></li>
-          <li class="main-header__item"><a href="/admin/products" class="<%= path === '/admin/products' ? 'active' : '' %>">Admin Products</a></li>
-        </span>
+        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/cart" class="<%= path === '/cart' ? 'active' : '' %>">Cart</a></li>
+        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/orders" class="<%= path === '/orders' ? 'active' : '' %>">Orders</a></li>
+        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/admin/add-product" class="<%= path === '/admin/add-product' ? 'active' : '' %>">Add Product</a></li>
+        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/admin/products" class="<%= path === '/admin/products' ? 'active' : '' %>">Admin Products</a></li>
       </ul>
-      <ul class="main-header__item-list">
-        <!-- <% if (!isAuthenticated) { %>
-          <li class="main-header__item">
-            <a href="/login" class="<%= path === '/login' ? 'active' : '' %>">Login</a>
-          </li>
-          <li class="main-header__item">
-            <a href="/signup" class="<%= path === '/signup' ? 'active' : '' %>">Signup</a>
-          </li>
-        <% } else { %>
-          <li class="main-header__item">
-            <form action="/logout" method="POST">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <button type="submit">Logout</button>
-            </form>
-          </li>
-        <% } %> -->
+      <ul v-if="$auth.state.loggedIn" class="main-header__item-list">
+        <li class="main-header__item">
+          <span href="/logout" @click="onLogout">Logout</span>
+        </li>
+      </ul>
+      <ul v-else class="main-header__item-list">
         <li class="main-header__item">
           <a href="/login" class="<%= path === '/login' ? 'active' : '' %>">Login</a>
+        </li>
+        <li class="main-header__item">
+          <a href="/signup" class="<%= path === '/signup' ? 'active' : '' %>">Signup</a>
         </li>
       </ul>
     </nav>
@@ -37,9 +28,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isAuthenticated: false
+  methods: {
+    async onLogout() {
+      await this.$auth.logout();
     }
   }
 }
