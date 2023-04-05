@@ -21,9 +21,15 @@
 
 <script>
 export default {
+  data() {
+    return {
+      products: []
+    }
+  },
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get('/api/cart');
+      console.log(response);
       return {
         products: response.products
       };
