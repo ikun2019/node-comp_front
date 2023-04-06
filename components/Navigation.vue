@@ -30,6 +30,7 @@
 export default {
   methods: {
     async onLogout() {
+      await this.$axios.$post('/api/auth/logout');
       await this.$auth.logout();
     }
   }
