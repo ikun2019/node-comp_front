@@ -1,5 +1,3 @@
-const URL = 'http://localhost:3000';
-
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -37,6 +35,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -49,11 +48,11 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    proxy: true,
-    baseURL: URL
+    // proxy: true,
+    baseURL: 'http://localhost:3000'
   },
   proxy: {
-    '/api': URL
+    '/api': 'http://localhost:3000'
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
