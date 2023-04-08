@@ -29,15 +29,12 @@
 <script>
 export default {
   layout: 'default',
-  data() {
-    return {
-      products: []
-    }
-  },
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get('/api/products');
-      this.products = response.products;
+      return {
+        products: response.products
+      }
     } catch (err) {
       console.log(err);
     }
