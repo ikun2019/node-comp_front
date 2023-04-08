@@ -34,12 +34,10 @@ export default {
       products: []
     }
   },
-  async asyncData({ $axios }) {
+  async fetch() {
     try {
-      let response = await $axios.$get('/api/products');
-      return {
-        products: response.products
-      }
+      let response = await this.$axios.$get('/api/products');
+      this.products = response.products;
     } catch (err) {
       console.log(err);
     }

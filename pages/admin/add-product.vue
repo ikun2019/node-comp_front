@@ -45,7 +45,6 @@ export default {
         }
         console.log(data);
         let response = this.$axios.$post(process.env.BASE_URL + '/api/admin/add-product', data);
-        console.log(response);
         this.$router.push('/');
       } catch (err) {
         console.log(err);
