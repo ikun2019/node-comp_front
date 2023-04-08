@@ -2,12 +2,12 @@
   <header class="main-header">
     <nav class="main-header__nav">
       <ul class="main-header__item-list">
-        <li class="main-header__item"><a href="/" class="<%= path === '/' ? 'active' : '' %>">Shop</a></li>
-        <li class="main-header__item"><a href="/products" class="<%= path === '/products' ? 'active' : '' %>">Products</a></li>
-        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/cart" class="<%= path === '/cart' ? 'active' : '' %>">Cart</a></li>
-        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/orders" class="<%= path === '/orders' ? 'active' : '' %>">Orders</a></li>
-        <li v-if="$auth.state.loggedIn" class="main-header__item"><nuxt-link to="/admin/add-product" class="<%= path === '/admin/add-product' ? 'active' : '' %>">Add Product</nuxt-link></li>
-        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/admin/products" class="<%= path === '/admin/products' ? 'active' : '' %>">Admin Products</a></li>
+        <li class="main-header__item"><a href="/" :class="{ 'active': $route.path === '/'  }">Shop</a></li>
+        <li class="main-header__item"><a href="/products" :class="{ 'active': $route.path === '/products' }">Products</a></li>
+        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/cart" class="{ 'active': $route.path === '/cart' }">Cart</a></li>
+        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/orders" class="{ 'active': $route.path === '/orders' }">Orders</a></li>
+        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/admin/add-product" :class="{ 'active': $route.path === '/admin/add-product' }">Add Product</a></li>
+        <li v-if="$auth.state.loggedIn" class="main-header__item"><a href="/admin/products" class="{ 'active': $route.path === '/admin/products' }">Admin Products</a></li>
       </ul>
       <ul v-if="$auth.state.loggedIn" class="main-header__item-list">
         <li class="main-header__item">
