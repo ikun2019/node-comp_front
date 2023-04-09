@@ -1,6 +1,6 @@
 <template>
   <main>
-    <form class="product-form">
+    <div class="product-form">
       <div class="form-control">
         <label for="title">Title</label>
         <input type="text" name="title" id="title" v-model="title">
@@ -17,35 +17,40 @@
         <label for="description">Description</label>
         <textarea name="description" id="description" rows="5" v-model="description"></textarea>
       </div>
-
-      <button class="btn" @click.prevent="onAddProduct">Add Product</button>
-    </form>
+      <button class="btn" @click="onUpdateProduct">Update Product</button>
+    </div>
   </main>
 </template>
 
 <script>
 export default {
-  layout: 'default',
-  data() {
-    return {
-      title: '',
-      imageUrl: '',
-      price: 0,
-      description: ''
+  async asyncData({ $axios, params }) {
+    try {
+      const productId = params.id;
+      const response = await $axios.$get('/api/admin/products/' + productId);
+      return {
+        title: response.product.title,
+        imageUrl: response.product.imageUrl,
+        price: response.product.price,
+        description: response.product.description
+      }
+    } catch (err) {
+      console.log(err);
     }
   },
   methods: {
-    async onAddProduct() {
+    async onUpdateProduct() {
       try {
+        const productId = this.$route.params.id;
+        console.log(productId)
         const data = {
           title: this.title,
           imageUrl: this.imageUrl,
           price: this.price,
           description: this.description
         }
-        console.log(data);
-        let response = await this.$axios.$post(process.env.BASE_URL + '/api/admin/add-product', data);
-        this.$router.push('/');
+        const response = await this.$axios.$put(`/api/admin/products/${productId}`, data);
+        this.$router.push('/admin/products');
       } catch (err) {
         console.log(err);
       }
