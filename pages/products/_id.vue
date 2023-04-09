@@ -35,7 +35,7 @@ export default {
   methods: {
     async addToCart(productId) {
       let response = await this.$axios.$post('http://localhost:3000/api/cart', { productId });
-      this.$router.push(`/products/${productId}`);
+      this.$router.push('/cart');
     }
   }
 }

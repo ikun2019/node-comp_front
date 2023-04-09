@@ -29,6 +29,11 @@
 <script>
 export default {
   layout: 'default',
+  data() {
+    return {
+      products: []
+    }
+  },
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get('/api/products');
