@@ -13,7 +13,7 @@
     </div>
     <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
     <div class="centered">
-      <a href="/reset">Forgot your password?</a>
+      <a href="/auth/reset">Forgot your password?</a>
     </div>
   </main>
 </template>
