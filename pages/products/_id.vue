@@ -13,7 +13,7 @@
     <p>
       {{ product.description }}
     </p>
-    <div @click="addToCart(product.id)">
+    <div @click="addToCart(product.id)" v-if="$auth.$state.loggedIn">
       <span class="btn">Add to Cart</span>
     </div>
   </main>
