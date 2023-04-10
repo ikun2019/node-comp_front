@@ -57,6 +57,15 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'new-password',
+        path: '/auth/:token',
+        component: resolve(__dirname, 'pages/auth/new-password.vue')
+      })
+    }
+  },
   auth: {
     strategies: {
       local: {
