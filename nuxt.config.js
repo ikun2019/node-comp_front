@@ -62,7 +62,7 @@ export default {
       routes.push({
         name: 'new-password',
         path: '/auth/:token',
-        component: resolve(__dirname, 'pages/auth/new-password.vue')
+        component: resolve(__dirname, 'pages/auth/_token.vue')
       })
     }
   },
