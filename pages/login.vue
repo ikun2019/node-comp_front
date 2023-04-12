@@ -1,5 +1,8 @@
 <template>
   <main>
+    <div v-if="errorMessage" class="user-message user-message--error">
+      {{ errorMessage }}
+    </div>
     <div class="login-form">
       <div class="form-control">
         <label for="email">E-mail</label>

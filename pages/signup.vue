@@ -18,7 +18,7 @@
       </div>
       <div class="form-control">
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" name="confirmPassword" id="confirmPassword">
+        <input type="password" name="confirmPassword" id="confirmPassword" v-model="confirmPassword">
       </div>
       <span class="btn" @click="onSignup">Signup</span>
     </div>
@@ -33,7 +33,8 @@ export default {
       name: '',
       email: '',
       password: '',
-      errorMessage: ''
+      errorMessage: '',
+      confirmPassword: ''
     }
   },
   methods: {
@@ -42,7 +43,8 @@ export default {
         let data = {
           name: this.name,
           email: this.email,
-          password: this.password
+          password: this.password,
+          confirmPassword: this.confirmPassword
         };
         let response = await this.$axios.$post('/api/auth/signup', data);
         if (response.success) {
