@@ -1,5 +1,8 @@
 <template>
   <main>
+    <div v-if="errorMessage" class="user-message user-message--error">
+      {{ errorMessage }}
+    </div>
     <div class="login-form">
       <div class="form-control">
         <label for="name">Name</label>
@@ -29,7 +32,8 @@ export default {
     return {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     }
   },
   methods: {
@@ -41,7 +45,6 @@ export default {
           password: this.password
         };
         let response = await this.$axios.$post('/api/auth/signup', data);
-        console.log(response);
         if (response.success) {
           await this.$auth.loginWith('local', {
             data: {
@@ -52,7 +55,7 @@ export default {
         };
         this.$router.push('/');
       } catch (err) {
-        console.log(err);
+        this.errorMessage = err.response.data.errorMessage;
       }
     }
   }
