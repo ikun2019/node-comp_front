@@ -1,12 +1,17 @@
 <template>
   <main>
-    <div v-if="errorMessage" class="user-message user-message--error">
+    <div v-if="errorMessage.length > 0" class="user-message user-message--error">
       {{ errorMessage }}
     </div>
     <div class="login-form">
       <div class="form-control">
         <label for="email">E-mail</label>
-        <input type="email" name="email" v-model="email">
+        <input
+          type="email"
+          name="email"
+          v-model="email"
+          :class="errorMessage.find(e => e.params === 'email') ? 'invalid' : ''"
+        >
       </div>
       <div class="form-control">
         <label for="password">Password</label>
@@ -14,7 +19,7 @@
       </div>
       <span class="btn" @click="onLogin">Login</span>
     </div>
-    <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
+    <p v-if="errorMessage.length > 0" style="color: red;">{{ errorMessage }}</p>
     <div class="centered">
       <a href="/auth/reset">Forgot your password?</a>
     </div>
@@ -29,7 +34,7 @@ export default {
     return {
       email: '',
       password: '',
-      errorMessage: ''
+      errorMessage: []
     }
   },
   methods: {
@@ -43,8 +48,8 @@ export default {
         })
         this.$router.push('/');
       } catch (err) {
-        this.errorMessage = "IDもしくはパスワードが間違っています。"
-        this.$auth.logout();
+        this.errorMessage = err.response.data.errorMessage;
+        this.$router.go(0);
       }
     }
   }

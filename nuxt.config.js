@@ -74,7 +74,10 @@ export default {
             propertyName: 'token',
             // url: 'http://localhost:3000/api/auth/login'
           },
-          logout: true
+          logout: {
+            url: '/api/auth/logout',
+            method: 'post'
+          }
         }
       }
     }
