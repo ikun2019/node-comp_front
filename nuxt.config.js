@@ -72,7 +72,7 @@ export default {
         endpoints: {
           login: {
             propertyName: 'token',
-            // url: 'http://localhost:3000/api/auth/login'
+            url: '/api/auth/login'
           },
           logout: {
             url: '/api/auth/logout',
