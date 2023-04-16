@@ -4,12 +4,12 @@
     <ul class="orders" v-else>
       <li v-for="(order, index) in orders" :key="index" class="orders__item">
         <h1>
-          Order - # {{ order.id }} - <a :href="'/orders/' + order.id">Invoice</a>
+          Order - # {{ order.id }} - <nuxt-link :to="'/orders/' + order.id">Invoice</nuxt-link>
         </h1>
         <ul class="orders__products">
           <li v-for="(product, index) in order.products" :key="index" class="orders__products-item">
             {{ product.title }}({{ product.orderItem.quantity }}) - 
-            <a :href="'/orders/' + order.id">Invoice</a>
+            <nuxt-link :to="'/orders/' + order.id">Invoice</nuxt-link>
           </li>
         </ul>
       </li>
