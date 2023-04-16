@@ -6,8 +6,8 @@
         <input type="text" name="title" id="title" v-model="title">
       </div>
       <div class="form-control">
-        <label for="imageUrl">Image URL</label>
-        <input type="text" name="imageUrl" id="imageUrl" v-model="imageUrl">
+        <label for="image">Image</label>
+        <input type="file" name="image" id="image" ref="fileInput">
       </div>
       <div class="form-control">
         <label for="price">Price</label>
@@ -18,7 +18,7 @@
         <textarea name="description" id="description" rows="5" v-model="description"></textarea>
       </div>
 
-      <button class="btn" @click.prevent="onAddProduct">Add Product</button>
+      <button type="submit" class="btn" @click.prevent="onAddProduct">Add Product</button>
     </form>
   </main>
 </template>
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       title: '',
-      imageUrl: '',
+      image: '',
       price: 0,
       description: ''
     }
@@ -37,14 +37,17 @@ export default {
   methods: {
     async onAddProduct() {
       try {
-        const data = {
-          title: this.title,
-          imageUrl: this.imageUrl,
-          price: this.price,
-          description: this.description
-        }
-        console.log(data);
-        let response = await this.$axios.$post(process.env.BASE_URL + '/api/admin/add-product', data);
+        const data = new FormData();
+        data.append('title', this.title);
+        data.append('image', this.$refs.fileInput.files[0]);
+        data.append('price', this.price);
+        data.append('description', this.description);
+        console.log(this.$refs.fileInput.files[0]);
+        let response = await this.$axios.$post(
+          process.env.BASE_URL + '/api/admin/add-product',
+          data,
+          { 'Content-Type': 'multipart/form-data' }
+        );
         this.$router.push('/');
       } catch (err) {
         console.log(err);
