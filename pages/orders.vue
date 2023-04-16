@@ -8,7 +8,7 @@
         </h1>
         <ul class="orders__products">
           <li v-for="(product, index) in order.products" :key="index" class="orders__products-item">
-            {{ product.title }}({{ product.orderItem.quantity }}) -
+            {{ product.title }}({{ product.orderItem.quantity }}) - 
             <a :href="'/orders/' + order.id">Invoice</a>
           </li>
         </ul>
@@ -23,6 +23,7 @@ export default {
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get('/api/orders');
+      console.log(response);
       return {
         orders: response.orders
       }

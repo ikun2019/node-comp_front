@@ -12,7 +12,8 @@
       </ul>
       <hr>
       <div class="centered">
-        <a href="/checkout" class="btn">Order Now!</a>
+        <!-- <a href="/checkout" class="btn">Order Now!</a> -->
+        <button class="btn" @click.prevent="onAddOrder">Order Now!</button>
       </div>
     </div>
     <h1 v-else>No Products in Cart!</h1>
@@ -29,7 +30,6 @@ export default {
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get('/api/cart');
-      console.log(response);
       return {
         products: response.products
       };
@@ -39,12 +39,20 @@ export default {
   },
   methods: {
     async deleteCartProduct(productId) {
-      console.log(productId)
       try {
         await this.$axios.$delete('/api/cart', { data: { productId } });
         let response = await this.$axios.$get('/api/cart');
         this.products = response.products;
         this.$router.push('/cart');
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async onAddOrder() {
+      try {
+        const response = await this.$axios.$post('/api/create-order');
+        console.log('onAddOrder =>', response);
+        this.$router.push('/orders');
       } catch (err) {
         console.log(err);
       }
