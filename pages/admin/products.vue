@@ -8,7 +8,7 @@
           </h1>
         </header>
         <div class="card__image">
-          <img :src="product.imageUrl" :alt="product.title">
+          <img :src="`${baseUrl}/images/` + product.imageUrl" :alt="product.title">
         </div>
         <div class="card__content">
           <h2 class="product__price">{{ product.price }}</h2>
@@ -31,20 +31,22 @@ export default {
   async asyncData({ $axios }) {
     try {
       const response = await $axios.$get('http://localhost:3000/api/admin/products');
-      console.log('response =>', response);
       return {
-        products: response.products
+        products: response.products,
+        baseUrl: process.env.BASE_URL
       }
     } catch (err) {
       console.log(err);
       return {
-        products: []
+        products: [],
+        baseUrl: process.env.BASE_URL
       }
     }
   },
   data() {
     return {
-      products: []
+      products: [],
+      baseUrl: ''
     }
   },
   methods: {
