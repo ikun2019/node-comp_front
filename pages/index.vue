@@ -20,6 +20,7 @@
           <nuxt-link :to="`/products/${product.id}`" class="btn">Detail</nuxt-link>
         </div>
       </article>
+      <pagenation :pageData="pageData"></pagenation>
     </div>
 
     <h1 v-else>No Products Found!</h1>
@@ -27,19 +28,35 @@
 </template>
 
 <script>
+import Pagination from '~/components/Pagenation.vue';
 export default {
   layout: 'default',
+  components: {
+    Pagination
+  },
   data() {
     return {
       products: [],
-      baseUrl: ''
+      baseUrl: '',
+      pageData: {
+        currentPage: '',
+        hasPreviosPage: false,
+        previosPage: '',
+        hasNextPage: false,
+        nextPage: ''
+      }
     }
   },
   async fetch() {
     try {
-      let response = await this.$axios.$get('/api/products');
-      this.products = response.products,
-      this.baseUrl = process.env.BASE_URL
+      let response = await this.$axios.$get('/api/?page=' + this.$route.query.page);
+      this.products = response.products;
+      this.baseUrl = process.env.BASE_URL;
+      this.pageData.currentPage = response.currentPage;
+      this.pageData.hasPreviosPage = response.previosPage;
+      this.pageData.previosPage = response.previosPage;
+      this.pageData.hasNextPage = response.hasNextPage;
+      this.pageData.nextPage = response.nextPage;
     } catch (err) {
       console.log(err);
     }
