@@ -13,7 +13,8 @@
       <hr>
       <div class="centered">
         <!-- <a href="/checkout" class="btn">Order Now!</a> -->
-        <button class="btn" @click.prevent="onAddOrder">Order Now!</button>
+        <!-- <button class="btn" @click.prevent="onAddOrder">Order Now!</button> -->
+        <a class="btn" href="/checkout">Order Now!</a>
       </div>
     </div>
     <h1 v-else>No Products in Cart!</h1>

@@ -18,7 +18,9 @@ export default {
       { rel: 'stylesheet', href: '/css/forms.css' },
       { rel: 'stylesheet', href: '/css/cart.css' },
       { rel: 'stylesheet', href: '/css/auth.css' }
-
+    ],
+    script: [
+      { src: 'https://js.stripe.com/v3/' }
     ]
   },
 

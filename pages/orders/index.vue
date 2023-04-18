@@ -23,7 +23,6 @@ export default {
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get('/api/orders');
-      console.log(response);
       return {
         orders: response.orders
       }
