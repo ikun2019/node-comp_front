@@ -70,19 +70,31 @@ export default {
     }
   },
   auth: {
+    localStorage: true,
     strategies: {
       local: {
         endpoints: {
           login: {
-            propertyName: 'token',
-            url: '/api/auth/login'
+            url: '/graphql',
+            method: 'post',
+            propertyName: 'token'
           },
-          logout: {
-            url: '/api/auth/logout',
-            method: 'post'
-          }
-        }
+          user: false,
+          logout: false,
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer',
+        token: {
+          property: 'token',
+          name: 'auth',
+        },
       }
-    }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/',
+    },
   }
 }

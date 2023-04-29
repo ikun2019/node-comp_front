@@ -6,12 +6,8 @@
     <div class="login-form">
       <div class="form-control">
         <label for="email">E-mail</label>
-        <input
-          type="email"
-          name="email"
-          v-model="email"
-          :class="errorMessage.find(e => e.params === 'email') ? 'invalid' : ''"
-        >
+        <input type="email" name="email" v-model="email"
+          :class="errorMessage.find(e => e.params === 'email') ? 'invalid' : ''">
       </div>
       <div class="form-control">
         <label for="password">Password</label>
@@ -30,7 +26,7 @@
 export default {
   middleware: 'auth',
   auth: 'guest',
-  data () {
+  data() {
     return {
       email: '',
       password: '',
@@ -40,12 +36,28 @@ export default {
   methods: {
     async onLogin() {
       try {
-        await this.$auth.loginWith('local', {
-          data: {
+        const response = await this.$axios.$post('/graphql', {
+          query: `
+            mutation login($email: String!, $password: String!) {
+              login(email: $email, password: $password) {
+                token
+                user {
+                  id
+                  name
+                  email
+                }
+              }
+            }
+          `,
+          variables: {
             email: this.email,
-            password: this.password
+            password: this.password,
           }
-        })
+        });
+        const token = response.data.login.token;
+        const user = response.data.login.user;
+        await this.$auth.setUser(user);
+        await this.$auth.setToken('local', 'Bearer ' + token);
         this.$router.push('/');
       } catch (err) {
         this.errorMessage = err.response.data.errorMessage;
