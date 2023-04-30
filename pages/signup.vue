@@ -27,6 +27,8 @@
 
 <script>
 export default {
+  middleware: 'auth',
+  auth: 'guest',
   layout: 'default',
   data() {
     return {
@@ -40,21 +42,10 @@ export default {
   methods: {
     async onSignup() {
       try {
-        let data = {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          confirmPassword: this.confirmPassword
-        };
-        let response = await this.$axios.$post('/graphql', {
+        const response = await this.$axios.$post('/graphql', {
           query: `
-            mutation createUser(userInput: { email: "${this.email}", password: "${this.password}", name: "${this.name}"}){}
-          `
-        });
-        if (response.success) {
-          const loginResponse = await this.$axios.$post('/graphql', {
-            query: `
-              mutation login(email: "${this.email}", password: #${this.password}) {
+            mutation {
+              createUser(userInput: { email: "${this.email}", password: "${this.password}", name: "${this.name}" }) {
                 token
                 user {
                   id
@@ -62,13 +53,14 @@ export default {
                   email
                 }
               }
-            `
-          });
-          const token = loginResponse.data.login.token;
-          const user = loginResponse.data.login.user;
-          await this.$auth.setUser(user);
-          await this.$auth.setToken('local', 'Bearer ' + token);
-        };
+            }
+          `
+        });
+        console.log(response);
+        const token = response.data.createUser.token;
+        const user = response.data.createUser.user;
+        await this.$auth.setUser(user);
+        await this.$auth.setToken('local', 'Bearer ' + token);
         this.$router.push('/');
       } catch (err) {
         this.errorMessage = err.response.data.errorMessage;
