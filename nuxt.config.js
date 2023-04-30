@@ -77,16 +77,19 @@ export default {
           login: {
             url: '/graphql',
             method: 'post',
-            propertyName: 'token'
+            propertyName: 'data.login'
           },
           user: false,
           logout: false,
         },
-        tokenRequired: true,
-        tokenType: 'Bearer',
+        user: {
+          property: 'data.user',
+          autoFetch: true,
+        },
         token: {
           property: 'token',
-          name: 'auth',
+          required: true,
+          type: 'Bearer'
         },
       }
     },

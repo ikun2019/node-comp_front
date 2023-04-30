@@ -46,14 +46,28 @@ export default {
           password: this.password,
           confirmPassword: this.confirmPassword
         };
-        let response = await this.$axios.$post('/api/auth/signup', data);
+        let response = await this.$axios.$post('/graphql', {
+          query: `
+            mutation createUser(userInput: { email: "${this.email}", password: "${this.password}", name: "${this.name}"}){}
+          `
+        });
         if (response.success) {
-          await this.$auth.loginWith('local', {
-            data: {
-              email: this.email,
-              password: this.password
-            }
-          })
+          const loginResponse = await this.$axios.$post('/graphql', {
+            query: `
+              mutation login(email: "${this.email}", password: #${this.password}) {
+                token
+                user {
+                  id
+                  name
+                  email
+                }
+              }
+            `
+          });
+          const token = loginResponse.data.login.token;
+          const user = loginResponse.data.login.user;
+          await this.$auth.setUser(user);
+          await this.$auth.setToken('local', 'Bearer ' + token);
         };
         this.$router.push('/');
       } catch (err) {
