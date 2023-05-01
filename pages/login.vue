@@ -38,8 +38,8 @@ export default {
       try {
         const response = await this.$axios.$post('/graphql', {
           query: `
-            mutation login($email: String!, $password: String!) {
-              login(email: $email, password: $password) {
+            mutation {
+              login(email: "${this.email}", password: "${this.password}") {
                 token
                 user {
                   id
@@ -48,11 +48,7 @@ export default {
                 }
               }
             }
-          `,
-          variables: {
-            email: this.email,
-            password: this.password,
-          }
+            `
         });
         const token = response.data.login.token;
         const user = response.data.login.user;

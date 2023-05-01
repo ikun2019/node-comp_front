@@ -31,10 +31,11 @@ export default {
         const headers = {
           Authorization: this.$auth.getToken('local')
         }
+        console.log(headers);
         const response = await this.$axios.$post('/graphql', {
           query: `
             mutation {
-              createPost(postInput: { title: "${this.title}", content: "${this.title}", imageUrl: "${this.imageUrl}" }) {
+              createPost(postInput: { title: "${this.title}", content: "${this.content}", imageUrl: "${this.imageUrl}" }) {
                 id
                 title
                 content
@@ -47,7 +48,7 @@ export default {
             }
           `
         }, { headers });
-        window.console.log(response);
+        window.console.log('response.data =>', response.data);
         this.$router.push('/');
       } catch (err) {
         console.error(err);
