@@ -5,6 +5,7 @@
     <div>
       <img :src="imageUrl" alt="">
     </div>
+    <nuxt-link :to="{ path: '/feed/update', query: { id: postId } }">Update</nuxt-link>
   </div>
 </template>
 
@@ -27,6 +28,7 @@ export default {
     const query = `
       query {
         getPost(id: ${postId}){
+          id
           title
           content
           imageUrl
@@ -36,8 +38,8 @@ export default {
     const response = await $axios.$post('/graphql', {
       query: query,
     }, { headers });
-    console.log(response);
     return {
+      postId: response.data.getPost.id,
       title: response.data.getPost.title,
       content: response.data.getPost.content,
       imageUrl: response.data.getPost.imageUrl,
