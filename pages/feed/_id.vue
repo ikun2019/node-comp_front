@@ -6,6 +6,7 @@
       <img :src="imageUrl" alt="">
     </div>
     <nuxt-link :to="{ path: '/feed/update', query: { id: postId } }">Update</nuxt-link>
+    <a href="#" @click.prevent="onDelete">Delete</a>
   </div>
 </template>
 
@@ -45,6 +46,32 @@ export default {
       imageUrl: response.data.getPost.imageUrl,
     }
   },
+  methods: {
+    async onDelete() {
+      try {
+        const headers = {
+          Authorization: this.$auth.getToken('local'),
+          'Content-Type': 'application/json',
+        }
+        const mutation = `
+          mutation($id: ID!) {
+            deletePost(id: $id)
+          }
+        `;
+        const variables = {
+          id: this.$route.params.id,
+        };
+        const response = await this.$axios.$post('/graphql', {
+          query: mutation,
+          variables: variables,
+        }, { headers });
+        console.log(response);
+        this.$router.push('/feed/posts');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
 }
 
 </script>
